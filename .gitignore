@@ -1,5 +1,6 @@
 main.c
 debug.c
+makefile
 *.out
 *.exe
 *.txt
