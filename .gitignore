@@ -1,5 +1,5 @@
-main.cpp
-debug.cpp
+main.c
+debug.c
 *.out
 *.exe
 *.txt
