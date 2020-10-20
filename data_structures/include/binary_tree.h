@@ -14,17 +14,8 @@
 */
 
 typedef bool(*comparer)(void *, void *);
-struct bnode
-{
-    struct bnode *parent;
-    struct bnode *left;
-    struct bnode *right;
-    void *key;
-};
-
 
 struct bnode *create_bnode(void *k);
-
 void inorder_traversal(struct bnode *root);
 void show_btree(struct bnode *root);
 
@@ -33,5 +24,5 @@ void show_btree(struct bnode *root);
  * which returns true if first argument 
  * is greater then second, and false otherwise
 */
-void insert_btree(struct bnode *root, void *key, comparer comp);
+void insert_btree(struct bnode **root, void *key, comparer comp);
 #endif
