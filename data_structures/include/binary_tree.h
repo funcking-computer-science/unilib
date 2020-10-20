@@ -4,29 +4,34 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define CAST(R, TYPE) *((TYPE) R)
+
 /*
  *
  *      BINARY TREE IMPLEMENTATION
+ *      by Bastard, all right reserver (i'm actually joking)
  * 
 */
 
-enum
+typedef bool(*comparer)(void *, void *);
+struct bnode
 {
-    B_TREE_EQUAL,
-    B_TREE_GREATER,
-    B_TREE_LESS
+    struct bnode *parent;
+    struct bnode *left;
+    struct bnode *right;
+    void *key;
 };
 
-typedef int(*comparer)(void *, void *);
-struct bnode;
 
 struct bnode *create_bnode(void *k);
+
+void inorder_traversal(struct bnode *root);
+void show_btree(struct bnode *root);
 
 /*
  * comparer is a pointer to a function 
  * which returns true if first argument 
- * is greater then second, and  false otherwise
+ * is greater then second, and false otherwise
 */
-void insert_btree(struct bnode *root, struct bnode *node, comparer comp);
-
+void insert_btree(struct bnode *root, void *key, comparer comp);
 #endif
