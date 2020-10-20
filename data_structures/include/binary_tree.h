@@ -1,3 +1,9 @@
+/*
+ *
+ *                      BINARY TREE 
+ *      by Bastard, all right reserver (i'm actually joking)
+ * 
+*/
 #ifndef UNILIB_BINARY_TREE_
     #define UNILIB_BINARY_TREE_
 #include <stdio.h>
@@ -5,19 +11,20 @@
 #include <stdbool.h>
 
 #define CAST(R, TYPE) *((TYPE) R)
+#define min_btree(R)    _return_element(__min_btree(R))
+#define max_btree(R)    _return_element(__max_btree(R))
+#define search_btree(R, K, C) _return_element(__search_bnode(R, K, C))
 
-/*
- *
- *      BINARY TREE IMPLEMENTATION
- *      by Bastard, all right reserver (i'm actually joking)
- * 
-*/
+struct bnode;
+enum 
+{
+    BTREE_GREATER, 
+    BTREE_LESS, 
+    BTREE_EQUAL
+};
 
-typedef bool(*comparer)(void *, void *);
-
-struct bnode *create_bnode(void *k);
+typedef int(*comparer)(void *, void *);
 void inorder_traversal(struct bnode *root);
-void show_btree(struct bnode *root);
 
 /*
  * comparer is a pointer to a function 
@@ -25,4 +32,19 @@ void show_btree(struct bnode *root);
  * is greater then second, and false otherwise
 */
 void insert_btree(struct bnode **root, void *key, comparer comp);
+
+//return pointer to create node
+struct bnode *create_bnode(void *k);
+
+//search the node by key
+struct bnode *__search_bnode(struct bnode *root, void *k, comparer comp);
+
+//return node which contain minimal element in tree
+struct bnode *__min_btree(struct bnode *root);
+
+//returns node which contain maximal element in tree 
+struct bnode *__max_btree(struct bnode *root);
+
+//just helper
+void *_return_element(struct bnode *root);
 #endif

@@ -29,10 +29,39 @@ void insert_btree(struct bnode **root, void *key, comparer comp)
         return;
     }
 
-    if(comp((*root)->key, key))
+    if(comp((*root)->key, key) == BTREE_GREATER)
         insert_btree(&(*root)->left, key, comp);
     else 
         insert_btree(&(*root)->right, key, comp);
+};
+
+struct bnode *__search_bnode(struct bnode *root, void *k, comparer comp)
+{
+    if(root == NULL || comp(root->key, k) == BTREE_EQUAL)
+        return root;
+    if(comp(root->key, k) == BTREE_GREATER)
+        return __search_bnode(root->left, k, comp);
+    else 
+        return __search_bnode(root->right, k, comp);
+};
+
+struct bnode *__min_btree(struct bnode *root)
+{
+    while(root->left)
+        root = root->left;
+    return root;
+};
+
+struct bnode *__max_btree(struct bnode *root)
+{
+    while(root->right)
+        root = root->right;
+    return root;
+};
+
+inline void *_return_element(struct bnode *node)
+{
+    return node == NULL ? NULL : node->key;
 }
 
 void inorder_traversal(struct bnode *root)
