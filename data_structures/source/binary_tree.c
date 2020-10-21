@@ -18,9 +18,9 @@ struct bnode *create_bnode(void *k)
     node->key = k;
     counter++;
     return node;
-};
+}
 
-void insert_btree(struct bnode **root, void *key, comparer comp)
+void recursive_insert_btree(struct bnode **root, void *key, comparer comp)
 {  
     //if tree is empty do insert
     if(*root == NULL)
@@ -35,6 +35,30 @@ void insert_btree(struct bnode **root, void *key, comparer comp)
         insert_btree(&(*root)->right, key, comp);
 };
 
+void insert_btree(struct bnode **root, void *key, comparer comp)
+{
+    struct bnode *m_root = *root;
+    struct bnode *node = create_bnode(key);
+
+    struct bnode *y = NULL;
+    struct bnode *x = m_root;
+    while(x != NULL)
+    {
+        y = x;
+        if(comp(x->key, node->key) == BTREE_GREATER)
+            x = x->left;
+        else 
+            x = x->right;
+    }
+    node->parent = y;
+    if(y == NULL)
+        *root = node;
+    else if(comp(y->key, node->key) == BTREE_GREATER)
+        y->left = node;
+    else 
+        y->right = node;
+}
+
 struct bnode *__search_bnode(struct bnode *root, void *k, comparer comp)
 {
     if(root == NULL || comp(root->key, k) == BTREE_EQUAL)
@@ -43,23 +67,23 @@ struct bnode *__search_bnode(struct bnode *root, void *k, comparer comp)
         return __search_bnode(root->left, k, comp);
     else 
         return __search_bnode(root->right, k, comp);
-};
+}
 
 struct bnode *__min_btree(struct bnode *root)
 {
     while(root->left)
         root = root->left;
     return root;
-};
+}
 
 struct bnode *__max_btree(struct bnode *root)
 {
     while(root->right)
         root = root->right;
     return root;
-};
+}
 
-inline void *_return_element(struct bnode *node)
+inline void *__return_element(struct bnode *node)
 {
     return node == NULL ? NULL : node->key;
 }

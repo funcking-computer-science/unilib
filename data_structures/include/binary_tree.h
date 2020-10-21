@@ -11,8 +11,8 @@
 #include <stdbool.h>
 
 #define CAST(R, TYPE) *((TYPE) R)
-#define min_btree(R)    _return_element(__min_btree(R))
-#define max_btree(R)    _return_element(__max_btree(R))
+#define min_btree(R)    __return_element(__min_btree(R))
+#define max_btree(R)    __return_element(__max_btree(R))
 #define search_btree(R, K, C) _return_element(__search_bnode(R, K, C))
 
 struct bnode;
@@ -31,6 +31,7 @@ void inorder_traversal(struct bnode *root);
  * which returns true if first argument 
  * is greater then second, and false otherwise
 */
+void recursive_insert_btree(struct bnode **root, void *key, comparer comp);
 void insert_btree(struct bnode **root, void *key, comparer comp);
 
 //return pointer to create node
@@ -46,5 +47,5 @@ struct bnode *__min_btree(struct bnode *root);
 struct bnode *__max_btree(struct bnode *root);
 
 //just helper
-void *_return_element(struct bnode *root);
+void *__return_element(struct bnode *root);
 #endif
