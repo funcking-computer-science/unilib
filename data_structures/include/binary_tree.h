@@ -11,9 +11,9 @@
 #include <stdbool.h>
 
 #define CAST(R, TYPE) *((TYPE) R)
-#define min_btree(R)    __return_element(__min_btree(R))
-#define max_btree(R)    __return_element(__max_btree(R))
-#define search_btree(R, K, C) _return_element(__search_bnode(R, K, C))
+#define min_btree(R)            __return_element(__min_btree(R))
+#define max_btree(R)            __return_element(__max_btree(R))
+#define search_btree(R, K, C)   __return_element(__search_bnode(R, K, C))
 
 struct bnode;
 enum 
@@ -33,6 +33,8 @@ void inorder_traversal(struct bnode *root);
 */
 void recursive_insert_btree(struct bnode **root, void *key, comparer comp);
 void insert_btree(struct bnode **root, void *key, comparer comp);
+void erase_btree(struct bnode **root, struct bnode *node);
+static void __transplant_btree(struct bnode **root, struct bnode **unode, struct bnode **vnode);
 
 //return pointer to create node
 struct bnode *create_bnode(void *k);
